@@ -27,12 +27,14 @@ router.post("/:bookid", async (req, res) => {
 
 router.get("/:bookid", async (req, res) => {
   var listOfComments = await getComments();
-  var filteredComments = listOfComments.filter(
-    comment => comment.BookID === req.params.id
-  );
-  if (filteredComments.length) {
-    res.send(filteredComments);
-  } else res.status(404).send(filteredComments);
+  if (req.params.bookid) {
+    var filteredComments = listOfComments.filter(
+      comment => comment.BookID === req.params.id
+    );
+    if (filteredComments.length) {
+      res.send(filteredComments);
+    } else res.status(404).send(filteredComments);
+  } else res.send(listOfComments);
 });
 
 router.delete("/:commentid", async (req, res) => {
