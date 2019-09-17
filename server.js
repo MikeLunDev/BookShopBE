@@ -5,6 +5,7 @@ const commentRouter = require("./services/comments");
 const cors = require("cors");
 const listRoutes = require("express-list-endpoints");
 const server = express();
+
 server.set("port", process.env.PORT || 3450);
 
 server.use(bodyParser.json());

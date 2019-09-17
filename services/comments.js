@@ -14,10 +14,16 @@ const saveComments = async books => {
 
 const router = express.Router();
 
+router.get("/", async (req, res) => {
+  console.log("i'm here");
+  var listOfComments = await getComments();
+  res.send(listOfComments);
+});
+
 router.post("/:bookid", async (req, res) => {
   var newComment = req.body;
   newComment.Date = new Date();
-  newComment.BookID = req.params.id;
+  newComment.BookID = req.params.bookid;
   newComment._id = shortid.generate();
   var listOfComments = await getComments();
   listOfComments.push(newComment);
@@ -27,14 +33,13 @@ router.post("/:bookid", async (req, res) => {
 
 router.get("/:bookid", async (req, res) => {
   var listOfComments = await getComments();
-  if (req.params.bookid) {
-    var filteredComments = listOfComments.filter(
-      comment => comment.BookID === req.params.id
-    );
-    if (filteredComments.length) {
-      res.send(filteredComments);
-    } else res.status(404).send(filteredComments);
-  } else res.send(listOfComments);
+
+  var filteredComments = listOfComments.filter(
+    comment => comment.BookID === req.params.bookid
+  );
+  if (filteredComments.length) {
+    res.send(filteredComments);
+  } else res.status(404).send(filteredComments);
 });
 
 router.delete("/:commentid", async (req, res) => {
