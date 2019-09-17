@@ -20,9 +20,8 @@ var corsOptions = {
     }
   }
 }; */
-
-server.use("/books", cors(), bookRouter);
 server.use("/books/comments", cors(), commentRouter);
+server.use("/books", cors(), bookRouter);
 
 console.log(listRoutes(server));
 
